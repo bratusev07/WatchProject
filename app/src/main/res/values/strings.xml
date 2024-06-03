@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name" translatable="false">WatchProject</string>
+    <string name="action_settings" translatable="false">Settings</string>
+</resources>
