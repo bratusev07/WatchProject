@@ -1,6 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="20dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="140dp" />
+
+    <TextView
+        android:id="@+id/pulse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Пульс:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pulse_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20000"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/pulse" />
+
+    <TextView
+        android:id="@+id/steps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Шаги:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pulse" />
+
+    <TextView
+        android:id="@+id/steps_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20000"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/steps" />
+
+    <TextView
+        android:id="@+id/glucose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Глюкоза:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/steps" />
+
+    <TextView
+        android:id="@+id/glucose_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20000"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/glucose" />
+
+    <TextView
+        android:id="@+id/heartWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Min/Max:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/glucose" />
+
+    <TextView
+        android:id="@+id/heartWarning_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20000"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/heartWarning" />
+
+    <TextView
+        android:id="@+id/oxygen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Кислород:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heartWarning" />
+
+    <TextView
+        android:id="@+id/oxygen_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20000"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/oxygen" />
+
+    <TextView
+        android:id="@+id/pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Давление:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/oxygen" />
+
+    <TextView
+        android:id="@+id/pressure_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20000"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/pressure" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startMeasurement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Начать измерение"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/lastMeasurement"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/lastMeasurement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Последнее измерение: "
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/lastMeasurement_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20:15"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintStart_toEndOf="@+id/lastMeasurement"
+        app:layout_constraintTop_toTopOf="@+id/lastMeasurement" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

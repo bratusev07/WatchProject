@@ -23,6 +23,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -59,27 +60,24 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
     List<Map<String, String>> mGridData = new ArrayList<>();
     GridAdatper mGridAdapter;
     Context mContext = OperaterActivity.this;
-
     WriteResponse writeResponse = new WriteResponse();
-
-    String PID = "";
+    Boolean debugFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_operate);
-        //setContentView(R.layout.activity_operate2);
-        mContext = getApplicationContext();
-        String deviceaddress = getIntent().getStringExtra("deviceaddress");
-        tv1 = (TextView) super.findViewById(R.id.tv1);
-        tv2 = (TextView) super.findViewById(R.id.tv2);
-        tv3 = (TextView) super.findViewById(R.id.tv3);
-        titleBleInfo = (TextView) super.findViewById(R.id.main_title_ble);
-        initGridView();
-        /*listenDeviceCallbackData();
-        listenCamera();*/
-        PID = "【进程名：" + Process.myPid() + "，线程：" + Thread.currentThread().getName() + "】";
-        VPLogger.e("数据操作--->" + PID);
+        if(debugFlag){
+            setContentView(R.layout.activity_operate);
+            mContext = getApplicationContext();
+            String deviceaddress = getIntent().getStringExtra("deviceaddress");
+            tv1 = (TextView) super.findViewById(R.id.tv1);
+            tv2 = (TextView) super.findViewById(R.id.tv2);
+            tv3 = (TextView) super.findViewById(R.id.tv3);
+            titleBleInfo = (TextView) super.findViewById(R.id.main_title_ble);
+            initGridView();
+        }else {
+            setContentView(R.layout.activity_operate2);
+        }
         VPOperateManager.getInstance().init(this);
         VPOperateManager.getInstance().setAutoConnectBTBySdk(false);
         VPOperateManager.getInstance().registerBTInfoListener(new IDeviceBTInfoListener() {
@@ -140,7 +138,6 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
                 showToast("Время ожидания подключения по BT");
             }
         });
-
         VPOperateManager.getInstance().listenDeviceCallbackData(new IBleNotifyResponse() {
             @Override
             public void onNotify(UUID service, UUID character, byte[] value) {
@@ -148,7 +145,11 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
             }
         });
 
-
+        if(!debugFlag){
+            ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                    .findViewById(android.R.id.content)).getChildAt(0);
+            new WatchFunctions(viewGroup);
+        }
     }
 
     @Override
@@ -184,7 +185,9 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(final AdapterView<?> parent, View view, int position, long id) {
-        WatchFunctions watchFunctions = new WatchFunctions();
+        ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
+        WatchFunctions watchFunctions = new WatchFunctions(viewGroup);
         switch (Objects.requireNonNull(mGridData.get(position).get("str"))){
             case HEART_DETECT_START: {
                 watchFunctions.startHeartRate();
