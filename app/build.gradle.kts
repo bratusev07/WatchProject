@@ -32,6 +32,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    packagingOptions {
+        exclude("lib/armeabi-v7a/libnative-lib.so")
+        exclude("lib/x86_64/libnative-lib.so")
+    }
 }
 
 dependencies {

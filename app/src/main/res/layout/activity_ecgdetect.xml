@@ -22,7 +22,7 @@
 
     </RelativeLayout>
 
-    <com.timaimee.vpdemo.activity.EcgHeartRealthView
+    <ru.bratusev.watchproject.activity.EcgHeartRealthView
         android:id="@+id/ecg_real_view"
         android:layout_width="match_parent"
         android:layout_height="400dp" />

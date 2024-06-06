@@ -68,6 +68,9 @@
         <activity android:name=".activity.OperaterActivity"
             android:exported="false"/>
 
+        <activity android:name=".activity.EcgDetectActivity"
+            android:exported="false"/>
+
         <service android:name="com.amap.api.location.APSService" android:exported="false"/>
 
         <service
