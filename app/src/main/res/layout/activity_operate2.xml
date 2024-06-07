@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="140dp" />
+        app:layout_constraintGuide_begin="160dp" />
 
     <TextView
         android:id="@+id/pulse"
@@ -29,6 +29,7 @@
         android:text="0"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:minWidth="100dp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/pulse" />
 
@@ -48,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:minWidth="100dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -69,6 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:minWidth="100dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -78,7 +81,7 @@
         android:id="@+id/heartWarning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Min/Max:"
+        android:text="Max/Min пульс:"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_marginTop="20dp"
@@ -90,6 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:minWidth="100dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -113,6 +117,7 @@
         android:text="0"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:minWidth="100dp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/oxygen" />
 
@@ -132,6 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:minWidth="100dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/guideline"

@@ -96,7 +96,7 @@ public class WatchFunctions {
         executor.scheduleAtFixedRate(this::warningRead, 50, period, TimeUnit.SECONDS);
         executor.scheduleAtFixedRate(this::spo2Open, 55, 100, TimeUnit.SECONDS);
         executor.scheduleAtFixedRate(this::bpDetectStart, 70, period, TimeUnit.SECONDS);
-        executor.scheduleAtFixedRate(this::updateTimer, 95, period, TimeUnit.SECONDS);
+        //executor.scheduleAtFixedRate(this::updateTimer, 95, period, TimeUnit.SECONDS);
     }
 
     private void updateTimer() {
@@ -241,7 +241,11 @@ public class WatchFunctions {
             public void onDataChange(BpData bpData) {
                 Log.d("MyBPLog", bpData.toString());
                 String temp = String.valueOf(bpData.getLowPressure()) + " / " + String.valueOf(bpData.getHighPressure());
-                if(!temp.equals("0 / 0")) ((TextView) viewGroup.findViewById(R.id.pressure_value)).setText(temp);
+                Log.d("MyBpLog", temp);
+                if(!temp.equals("0 / 0")){
+                    ((TextView) viewGroup.findViewById(R.id.pressure_value)).setText(temp);
+                    updateTimer();
+                }
             }
         }, EBPDetectModel.DETECT_MODEL_PUBLIC);
     }
