@@ -226,7 +226,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         }
 
         if (!BluetoothUtils.isBluetoothEnabled()) {
-            Toast.makeText(mContext, "Bluetooth не включен", Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(mContext, "Bluetooth не включен", Toast.LENGTH_SHORT).show();*/
             return true;
         }
         startScan();

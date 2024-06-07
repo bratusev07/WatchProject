@@ -41,7 +41,11 @@ import com.veepoo.protocol.model.enums.EFunctionStatus;
 import com.veepoo.protocol.model.settings.CustomSettingData;
 import com.veepoo.protocol.model.settings.HeartWaringSetting;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -84,22 +88,31 @@ public class WatchFunctions {
     }
 
     public void startMeasurement(){
+        int period = 100;
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(6);
-        startHeartRate();
-        //executor.scheduleAtFixedRate(this::startHeartRate, 10, 1, TimeUnit.SECONDS);
-        //executor.scheduleAtFixedRate(this::sportDataRead, 10, 1, TimeUnit.SECONDS);
-        //executor.scheduleAtFixedRate(this::startBloodGlucose, 10, 1, TimeUnit.SECONDS);
-        //executor.scheduleAtFixedRate(this::warningRead, 10, 1, TimeUnit.SECONDS);
-        //executor.scheduleAtFixedRate(this::spo2Open, 10, 1, TimeUnit.SECONDS);
-        //executor.scheduleAtFixedRate(this::bpDetectStart, 10, 1, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(this::startHeartRate, 0, period, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(this::sportDataRead, 20, period, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(this::startBloodGlucose, 25, period, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(this::warningRead, 50, period, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(this::spo2Open, 55, 100, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(this::bpDetectStart, 70, period, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(this::updateTimer, 95, period, TimeUnit.SECONDS);
+    }
+
+    private void updateTimer() {
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        String timeText = timeFormat.format(new Date());
+        Log.d("MyTimerLog", timeText + " установлен");
+        ((TextView)viewGroup.findViewById(R.id.lastMeasurement_value)).setText(timeText);
     }
 
     public void startHeartRate() {
         VPOperateManager.getInstance().startDetectHeart(writeResponse, new IHeartDataListener() {
             @Override
             public void onDataChange(HeartData heart) {
-                ((TextView) viewGroup.findViewById(R.id.pulse_value)).setText(heart.getData());
                 Log.d("MyHeartLog", heart.toString());
+                String temp = String.valueOf(heart.getData());
+                if(!temp.equals("0")) ((TextView) viewGroup.findViewById(R.id.pulse_value)).setText(temp);
             }
         });
     }
@@ -108,8 +121,9 @@ public class WatchFunctions {
         VPOperateManager.getInstance().readSportStep(writeResponse, new ISportDataListener() {
             @Override
             public void onSportDataChange(SportData sportData) {
-                ((TextView) viewGroup.findViewById(R.id.steps_value)).setText(sportData.getStep());
                 Log.d("MySportLog", sportData.toString());
+                String temp = String.valueOf(sportData.getStep());
+                ((TextView) viewGroup.findViewById(R.id.steps_value)).setText(temp);
             }
         });
     }
@@ -122,8 +136,9 @@ public class WatchFunctions {
             }
             @Override
             public void onBloodGlucoseDetect(int progress, float bloodGlucose, EBloodGlucoseRiskLevel riskLevel) {
-                ((TextView) viewGroup.findViewById(R.id.glucose_value)).setText(String.valueOf(bloodGlucose));
+                String glucose = String.valueOf(bloodGlucose);
                 Log.d("MyGlucoseLog", "[progress:" + progress + " bloodGlucose: " + bloodGlucose + "]");
+                if(!glucose.equals("0.0"))((TextView) viewGroup.findViewById(R.id.glucose_value)).setText(glucose);
             }
             @Override
             public void onBloodGlucoseStopDetect() {
@@ -136,9 +151,9 @@ public class WatchFunctions {
         VPOperateManager.getInstance().readHeartWarning(writeResponse, new IHeartWaringDataListener() {
             @Override
             public void onHeartWaringDataChange(HeartWaringData heartWaringData) {
-                ((TextView) viewGroup.findViewById(R.id.heartWarning_value)).setText(heartWaringData.getHeartLow()
-                        + " / " + heartWaringData.getHeartHigh());
                 Log.d("MyHeartWaringLog", heartWaringData.toString());
+                String temp = heartWaringData.getHeartHigh() + " / " + heartWaringData.getHeartLow();
+                ((TextView) viewGroup.findViewById(R.id.heartWarning_value)).setText(temp);
             }
         });
     }
@@ -147,9 +162,9 @@ public class WatchFunctions {
         VPOperateManager.getInstance().settingHeartWarning(writeResponse, new IHeartWaringDataListener() {
             @Override
             public void onHeartWaringDataChange(HeartWaringData heartWaringData) {
-                ((TextView) viewGroup.findViewById(R.id.heartWarning_value)).setText(heartWaringData.getHeartLow()
-                        + " / " + heartWaringData.getHeartHigh());
                 Log.d("MyHeartWaringLog", heartWaringData.toString());
+                String temp = heartWaringData.getHeartHigh() + " / " + heartWaringData.getHeartLow();
+                ((TextView) viewGroup.findViewById(R.id.heartWarning_value)).setText(temp);
             }
         }, new HeartWaringSetting(120, 110, true));
     }
@@ -207,7 +222,8 @@ public class WatchFunctions {
         VPOperateManager.getInstance().startDetectSPO2H(writeResponse, new ISpo2hDataListener() {
             @Override
             public void onSpO2HADataChange(Spo2hData spo2HData) {
-                ((TextView) viewGroup.findViewById(R.id.oxygen_value)).setText(spo2HData.getValue());
+                String temp = String.valueOf(spo2HData.getValue());
+                if(!temp.equals("0"))((TextView) viewGroup.findViewById(R.id.oxygen_value)).setText(temp);
                 Log.d("MySpO2Log", spo2HData.toString());
             }
         }, new ILightDataCallBack() {
@@ -223,9 +239,9 @@ public class WatchFunctions {
         VPOperateManager.getInstance().startDetectBP(writeResponse, new IBPDetectDataListener() {
             @Override
             public void onDataChange(BpData bpData) {
-                ((TextView) viewGroup.findViewById(R.id.pressure_value)).setText(bpData.getHighPressure()
-                        + " / " + bpData.getLowPressure());
                 Log.d("MyBPLog", bpData.toString());
+                String temp = String.valueOf(bpData.getLowPressure()) + " / " + String.valueOf(bpData.getHighPressure());
+                if(!temp.equals("0 / 0")) ((TextView) viewGroup.findViewById(R.id.pressure_value)).setText(temp);
             }
         }, EBPDetectModel.DETECT_MODEL_PUBLIC);
     }

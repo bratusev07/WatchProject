@@ -83,48 +83,48 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
         VPOperateManager.getInstance().registerBTInfoListener(new IDeviceBTInfoListener() {
             @Override
             public void onDeviceBTFunctionNotSupport() {
-                showToast("Не поддерживает функцию BT");
+                /*//showToast("Не поддерживает функцию BT");*/
             }
 
             @Override
             public void onDeviceBTInfoSettingSuccess(@NotNull BTInfo btInfo) {
-                showToast("【BT】- ---> btInfo : " + btInfo.toString());
+                /*//showToast("【BT】- ---> btInfo : " + btInfo.toString());*/
             }
 
             @Override
             public void onDeviceBTInfoSettingFailed() {
-                showToast("【BT】- ---> Сбой настройки BT");
+                ////showToast("【BT】- ---> Сбой настройки BT");
             }
 
             @Override
             public void onDeviceBTInfoReadSuccess(@NotNull BTInfo btInfo) {
-                showToast("【BT】- ---> BT успешно прочитан, btInfo : " + btInfo.toString());
+                ////showToast("【BT】- ---> BT успешно прочитан, btInfo : " + btInfo.toString());
             }
 
             @Override
             public void onDeviceBTInfoReadFailed() {
-                showToast("【BT】- ---> Не удалось выполнить чтение BT");
+                ////showToast("【BT】- ---> Не удалось выполнить чтение BT");
             }
 
             @Override
             public void onDeviceBTInfoReport(@NotNull BTInfo btInfo) {
-                showToast("【BT】- ---> Отчет BT，btInfo = " + btInfo.toString());
+                ////showToast("【BT】- ---> Отчет BT，btInfo = " + btInfo.toString());
             }
         });
         VPOperateManager.getInstance().registerBTConnectionListener(new IDeviceBTConnectionListener() {
             @Override
             public void onDeviceBTConnecting() {
-                showToast("Подключенное устройство BT");
+                ////showToast("Подключенное устройство BT");
             }
 
             @Override
             public void onDeviceBTConnected() {
-                showToast("Устройство BT подключено");
+                //showToast("Устройство BT подключено");
             }
 
             @Override
             public void onDeviceBTDisconnected() {
-                showToast("Устройство BT отключено");
+                //showToast("Устройство BT отключено");
 //                VPOperateManager.getInstance().setBTStatus(false, true, true, false, new IBleWriteResponse() {
 //                    @Override
 //                    public void onResponse(int code) {
@@ -135,7 +135,7 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
 
             @Override
             public void onDeviceBTConnectTimeout() {
-                showToast("Время ожидания подключения по BT");
+                //showToast("Время ожидания подключения по BT");
             }
         });
         VPOperateManager.getInstance().listenDeviceCallbackData(new IBleNotifyResponse() {
@@ -326,7 +326,7 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
                     for (int j : ids) {
                         sb.append(j).append(",");
                     }
-                    showToast("Считывание идентификатора ЭКГ завершено：" + sb);
+                    //showToast("Считывание идентификатора ЭКГ завершено：" + sb);
                 }
             });
         }
@@ -334,11 +334,11 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
             VPOperateManager.getInstance().setNewEcgDataReportListener(new INewECGDataReportListener() {
                 @Override
                 public void onNewECGDetectDataReport() {
-                    showToast("Следите за тем, чтобы устройство сообщало о новых данных измерения ЭКГ," +
+                    //showToast("Следите за тем, чтобы устройство сообщало о новых данных измерения ЭКГ," +
                             " пожалуйста, ознакомьтесь с данными ЭКГ для получения подробной информации");
                 }
             });
-            showToast("Мониторинг настроен, пожалуйста, подойдите к прибору для измерения ЭКГ");
+            //showToast("Мониторинг настроен, пожалуйста, подойдите к прибору для измерения ЭКГ");
         }
         else if (oprater.equals(DEVICE_ECG_ALWAYS_CLOSE)) {
             boolean isHaveMetricSystem = true;
@@ -521,42 +521,42 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
                 @Override
                 public void onDetecting(int progress, int leadState) {}
                 @Override
-                public void onDetectSuccess(@NotNull BodyComponent bodyComponent) {showToast("Успешное измерение：" + bodyComponent);}
+                public void onDetectSuccess(@NotNull BodyComponent bodyComponent) {//showToast("Успешное измерение：" + bodyComponent);}
                 @Override
-                public void onDetectFailed(@NotNull DetectState detectState) {showToast("Ошибка измерения：" + detectState);}
+                public void onDetectFailed(@NotNull DetectState detectState) {//showToast("Ошибка измерения：" + detectState);}
                 @Override
                 public void onDetectStop() {
-                    showToast("Остановка измерения");
+                    //showToast("Остановка измерения");
                 }
             });
-            showToast("Измеряются данные о составе тела....");
+            //showToast("Измеряются данные о составе тела....");
         }
         else if (oprater.equals(DETECT_STOP_BODY_COMPONENT)) {
-            showToast("Конечное измерение данных о составе тела");
+            //showToast("Конечное измерение данных о составе тела");
             VPOperateManager.getInstance().stopDetectBodyComponent(writeResponse);}
         else if (oprater.equals(READ_BODY_COMPONENT_ID)) {
             VPOperateManager.getInstance().readBodyComponentId(writeResponse, new IBodyComponentReadIdListener() {
                 @Override
                 public void readIdFinish(@NotNull ArrayList<Integer> ids) {
-                    showToast("Считывание завершено, количество идентификаторов：" + ids.size());
+                    //showToast("Считывание завершено, количество идентификаторов：" + ids.size());
                 }
             });}
         else if (oprater.equals(READ_BODY_COMPONENT_DATA)) {
             VPOperateManager.getInstance().readBodyComponentData(writeResponse, new IBodyComponentReadDataListener() {
                 @Override
                 public void readBodyComponentDataFinish(@Nullable List<BodyComponent> bodyComponentList) {
-                    showToast("Считывание данных о составе тела завершено：" + bodyComponentList.toString());
+                    //showToast("Считывание данных о составе тела завершено：" + bodyComponentList.toString());
                 }
             });}
         else if (oprater.equals(SET_BODY_COMPONENT_NEW_DATA_REPORT)) {
             VPOperateManager.getInstance().setBodyComponentReportListener(new INewBodyComponentReportListener() {
                 @Override
                 public void onNewBodyComponentReport() {
-                    showToast("Следите за тем, чтобы устройство сообщало новые данные о составе тела," +
+                    //showToast("Следите за тем, чтобы устройство сообщало новые данные о составе тела," +
                             " пожалуйста, ознакомьтесь с данными о составе тела для получения подробной информации");
                 }
             });
-            showToast("Мониторинг настроен, пожалуйста, перейдите к прибору для измерения состава тела");
+            //showToast("Мониторинг настроен, пожалуйста, перейдите к прибору для измерения состава тела");
         }*/
         // TODO: BLOOD COMPOSITION Not supported
 /*        else if (oprater.equals(READ_BLOOD_COMPOSITION_CALIBRATION)) {
@@ -567,11 +567,11 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
                 public void onBloodCompositionSettingSuccess(boolean isOpen, @NotNull BloodComponent bloodComposition) {}
                 @Override
                 public void onBloodCompositionReadFailed() {
-                    showToast("При калибровке не удалось определить состав крови");
+                    //showToast("При калибровке не удалось определить состав крови");
                 }
                 @Override
                 public void onBloodCompositionReadSuccess(boolean isOpen, @NotNull BloodComponent bloodComposition) {
-                    showToast("Считайте состав крови и успешно выполните калибровку：" + isOpen + "," + bloodComposition);
+                    //showToast("Считайте состав крови и успешно выполните калибровку：" + isOpen + "," + bloodComposition);
                     OperaterActivity.this.isBloodCompositionOpen = isOpen;
                 }
             });}
@@ -580,11 +580,11 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
             VPOperateManager.getInstance().settingBloodComponentCalibration(writeResponse, isBloodCompositionOpen, bloodComponent, new IBloodComponentOptListener() {
                 @Override
                 public void onBloodCompositionSettingFailed() {
-                    showToast("Не удалось настроить калибровку компонентов крови");
+                    //showToast("Не удалось настроить калибровку компонентов крови");
                 }
                 @Override
                 public void onBloodCompositionSettingSuccess(boolean isOpen, @NotNull BloodComponent bloodComposition) {
-                    showToast("Успешно настроена калибровка компонентов крови：" + isOpen + "," + bloodComposition);
+                    //showToast("Успешно настроена калибровка компонентов крови：" + isOpen + "," + bloodComposition);
                 }
                 @Override
                 public void onBloodCompositionReadFailed() {}
@@ -597,21 +597,21 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
             VPOperateManager.getInstance().startDetectBloodComponent(writeResponse, isBloodCompositionOpen, new IBloodComponentDetectListener() {
                 @Override
                 public void onDetectComplete(@NotNull BloodComponent bloodComponent) {
-                    showToast("Завершено измерение состава крови：" + bloodComponent);
+                    //showToast("Завершено измерение состава крови：" + bloodComponent);
                 }
                 @Override
                 public void onDetectStop() {
-                    showToast("Окончание измерения состава крови");
+                    //showToast("Окончание измерения состава крови");
                 }
                 @Override
                 public void onDetecting(int progress, @NotNull BloodComponent bloodComponent) {
                     if (progress % 50 == 0) {
-                        showToast("Измерение состава крови..");
+                        //showToast("Измерение состава крови..");
                     }
                 }
                 @Override
                 public void onDetectFailed(@NotNull EBloodComponentDetectState errorState) {
-                    showToast("Не удалось измерить состав крови：" + errorState);
+                    //showToast("Не удалось измерить состав крови：" + errorState);
                 }
             });}
         else if (oprater.equals(DETECT_STOP_BLOOD_COMPONENT)) {
@@ -644,22 +644,22 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
         VPOperateManager.getInstance().connectBT(VPOperateManager.getCurrentDeviceAddress(), new IDeviceBTConnectionListener() {
             @Override
             public void onDeviceBTConnecting() {
-                showToast("Подключение устройства BT");
+                //showToast("Подключение устройства BT");
             }
 
             @Override
             public void onDeviceBTConnected() {
-                showToast("Устройство BT подключено");
+                //showToast("Устройство BT подключено");
             }
 
             @Override
             public void onDeviceBTDisconnected() {
-                showToast("Устройство BT отключено");
+                //showToast("Устройство BT отключено");
             }
 
             @Override
             public void onDeviceBTConnectTimeout() {
-                showToast("Время ожидания подключения по BT");
+                //showToast("Время ожидания подключения по BT");
             }
         });
     }
@@ -668,22 +668,22 @@ public class OperaterActivity extends Activity implements AdapterView.OnItemClic
         VPOperateManager.getInstance().disconnectBT(VPOperateManager.getCurrentDeviceAddress(), new IDeviceBTConnectionListener() {
             @Override
             public void onDeviceBTConnecting() {
-                showToast("BT设备连接中");
+                //showToast("BT设备连接中");
             }
 
             @Override
             public void onDeviceBTConnected() {
-                showToast("BT设备已连接");
+                //showToast("BT设备已连接");
             }
 
             @Override
             public void onDeviceBTDisconnected() {
-                showToast("BT设备已断开");
+                //showToast("BT设备已断开");
             }
 
             @Override
             public void onDeviceBTConnectTimeout() {
-                showToast("BT连接超时");
+                //showToast("BT连接超时");
             }
         });
     }
